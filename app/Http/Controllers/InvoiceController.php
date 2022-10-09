@@ -53,11 +53,11 @@ class InvoiceController extends Controller
             return to_route('tunnels.create');
         }
 
-        // if ($request->user()->latestOfTransactionNotConfirmed) {
-        //     throw ValidationException::withMessages([
-        //         'method' => 'Silahkan selesaikan pembayaran Anda sebelumnya',
-        //     ]);
-        // }
+        if ($request->user()->latestOfTransactionNotConfirmed) {
+            throw ValidationException::withMessages([
+                'method' => 'Silahkan selesaikan pembayaran Anda sebelumnya',
+            ]);
+        }
 
         $amount = $request->amount;
         $method = $request->method;;
