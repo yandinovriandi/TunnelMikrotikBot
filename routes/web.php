@@ -13,10 +13,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', HomeController::class)->name('home');
+require __DIR__ . '/auth.php';
+
+Route::middleware('auth')->group(function () {
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('topup/transaksi', 'create')->name('topup.create');
@@ -59,5 +62,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 Route::post('confirm-payment', [CallbackPaymentController::class, 'handle']);
-
-require __DIR__ . '/auth.php';
