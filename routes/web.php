@@ -17,8 +17,11 @@ require __DIR__ . '/auth.php';
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::controller(CreditController::class)->group(function () {
         Route::get('credit/create', 'create')->name('credit.create');

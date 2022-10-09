@@ -43,7 +43,6 @@ class CallbackPaymentController extends Controller
         }
         $reference = $data->reference;
         $status = strtoupper((string) $data->status);
-        // dd($data);
         /*
         |--------------------------------------------------------------------------
         | Proses callback untuk closed payment
