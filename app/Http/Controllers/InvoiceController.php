@@ -41,23 +41,23 @@ class InvoiceController extends Controller
 
     public function store(Request $request)
     {
-        if (empty($request->username)) {
+        if (empty($request->amount)) {
             throw ValidationException::withMessages([
                 // 'server_id' => 'Pilih server terlebih dahulu',
                 'amount' => 'Pilih jumlah saldo yang akan di topup',
                 'method' => 'Pilih jenis pembayaran.',
                 // 'price' => 'Silahkan pilih durasi sekaligus harga tunnel',
             ]);
-            session()->flash('status', 'Tunnel Gagal di buat');
+            session()->flash('status', 'Permintaan Top Up gagal, silahkan ulangi');
 
-            return to_route('tunnels.create');
+            return to_route('topup.create');
         }
 
-        if ($request->user()->latestOfTransactionNotConfirmed) {
-            throw ValidationException::withMessages([
-                'method' => 'Silahkan selesaikan pembayaran Anda sebelumnya',
-            ]);
-        }
+        // if ($request->user()->latestOfTransactionNotConfirmed) {
+        //     throw ValidationException::withMessages([
+        //         'method' => 'Selesaikan pembayaran Anda sebelumnya',
+        //     ]);
+        // }
 
         $amount = $request->amount;
         $method = $request->method;;

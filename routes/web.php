@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboarAdminController;
-use App\Http\Controllers\CreditController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
@@ -9,24 +8,15 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Tripay\CallbackPaymentController;
 use App\Http\Controllers\TunnelController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserPasswordProfileController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
-require __DIR__ . '/auth.php';
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::middleware('auth')->group(function () {
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::controller(CreditController::class)->group(function () {
-        Route::get('credit/create', 'create')->name('credit.create');
-        Route::post('credit/create', 'store')->name('credit.store');
-    });
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('topup/transaksi', 'create')->name('topup.create');
@@ -68,5 +58,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-
 Route::post('confirm-payment', [CallbackPaymentController::class, 'handle']);
+
+require __DIR__ . '/auth.php';
