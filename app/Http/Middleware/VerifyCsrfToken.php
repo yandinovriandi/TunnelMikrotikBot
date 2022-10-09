@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'http://tunnel.mikrotikbot.com/confirm-payment'
+        'https://tunnel.mikrotikbot.com/confirm-payment'
     ];
 }
