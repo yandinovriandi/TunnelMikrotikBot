@@ -14,7 +14,7 @@
                             <center>
                                 <button class="btn btn-sm btn-outline-orange btn-icon" type="button"
                                     data-bs-dismiss="modal"> <i data-feather="slash"></i></button>
-                                <button disabled class="btn btn-sm btn-outline-green btn-icon" type="submit">
+                                <button class="btn btn-sm btn-outline-green btn-icon" type="submit">
                                     <i data-feather="check-circle"></i>
                                 </button>
                             </center>

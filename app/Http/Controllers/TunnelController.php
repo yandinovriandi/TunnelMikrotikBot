@@ -235,6 +235,65 @@ class TunnelController extends Controller
 
     public function destroy(Tunnel $tunnel)
     {
+        $username = $tunnel->username;
+
+        // ==============api================
+
+        $pap = $tunnel->api;
+
+        $updatePortApi = new Query('/ip/firewall/nat/print');
+        $updatePortApi->where('dst-port', $pap);
+        $upas = $this->client->query($updatePortApi)->read();
+
+        foreach ($upas as $upa) {
+            $updatePortWinbox = (new Query('/ip/firewal/nat/remove'))
+                ->equal('.id', $upa['.id']);
+            $this->client->query($updatePortWinbox)->read();
+        }
+
+        // ==============api================
+
+        // ==============winbox================
+
+        $win = $tunnel->winbox;
+
+        $updatePortWinbox = new Query('/ip/firewall/nat/print');
+        $updatePortWinbox->where('dst-port', $win);
+        $wins = $this->client->query($updatePortWinbox)->read();
+
+        foreach ($wins as $win) {
+            $updatePortWinbox = (new Query('/ip/firewal/nat/remove'))
+                ->equal('.id', $win['.id']);
+            $this->client->query($updatePortWinbox)->read();
+        }
+        // ==============winbox================
+
+        // ==============web================
+        $web = $tunnel->web;
+
+        $updatePortWeb = new Query('/ip/firewall/nat/print');
+        $updatePortWeb->where('dst-port', $web);
+        $webs = $this->client->query($updatePortWeb)->read();
+
+        foreach ($webs as $web) {
+            $updatePortWeb = (new Query('/ip/firewal/nat/remove'))
+                ->equal('.id', $web['.id']);
+            $this->client->query($updatePortWeb)->read();
+        }
+        // ==============web================
+
+
+        $updateTunnel = new Query('/ppp/secret/print');
+        $updateTunnel->where('name', $username);
+        $tunnelUsers = $this->client->query($updateTunnel)->read();
+
+        foreach ($tunnelUsers as $tu) {
+            $tu = (new Query('/ppp/secret/remove'))
+                ->where('name', $username)
+                ->equal('.id', $tu['.id']);
+            $this->client->query($tu)->read();
+        }
+
         $tunnel->delete();
         session()->flash('status', 'Tunnel anda berhasil di hapus!');
         return to_route('tunnels.index');
