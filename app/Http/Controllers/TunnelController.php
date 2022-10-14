@@ -126,6 +126,7 @@ class TunnelController extends Controller
 
     public function show(Tunnel $tunnel)
     {
+        $username = $tunnel->username;
         $win = $tunnel->winbox;
         $winb = new Query('/ip/firewall/nat/print');
         $winb->where('dst-port', $win);
@@ -144,8 +145,14 @@ class TunnelController extends Controller
         $webps =   $this->client->query($webp)->read();
         $p_web = $webps[0];
 
+        $secrt = new Query('/ppp/secret/print');
+        $secrt->where('name', $username);
+        $secrets = $this->client->query($secrt)->read();
+        $secret = $secrets[0];
+        // dd($secret);
         return view('tunnels/details', [
             'tunnel' => $tunnel,
+            'secret' => $secret,
             'p_win' => $p_win,
             'p_api' => $p_api,
             'p_web' => $p_web

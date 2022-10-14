@@ -41,11 +41,11 @@
                                 <p class="badge bg-success">{{ $tunnel->status }}</p>
                                 <p class="text-xs mb-1">
                                     <code>
-                                        {{ $tunnel->url }} (api:{{ $p_api['to-ports'] }}),
-                                        {{ $tunnel->server }}:{{ $p_win['dst-port'] }}
-                                        (winbox:{{ $p_win['to-ports'] }}),
-                                        {{ $tunnel->server }}:{{ $p_web['dst-port'] }}
-                                        (webfig:{{ $p_web['to-ports'] }})
+                                        {{ $tunnel->url }} (api:{{ $p_api['to-ports'] ?? '' }}),
+                                        {{ $tunnel->server }}:{{ $p_win['dst-port'] ?? '' }}
+                                        (winbox:{{ $p_win['to-ports'] ?? '' }}),
+                                        {{ $tunnel->server }}:{{ $p_web['dst-port'] ?? '' }}
+                                        (webfig:{{ $p_web['to-ports'] ?? '' }})
                                     </code>
                                 </p>
                             </center>
@@ -99,9 +99,10 @@
                             <hr>
                             <p class="card-text">
                             <p class="text-xs"> Di sarankan menggunakan netwatch</p>
-                            <p class="text-xs">IP : 10.10.0.1</p>
+                            <p class="text-xs">IP : {{ $secret['local-address'] ?? '' }}</p>
                             <code class="text-xs">
-                                /tool netwatch add host="10.10.0.1" interval="00:01:00" comment="mikrotikbot.com"
+                                /tool netwatch add host="{{ $secret['local-address'] ?? '' }}" interval="00:01:00"
+                                comment="mikrotikbot.com"
                             </code>
                         </div>
                         <div class="tab-pane fade" id="edit_delete" role="tabpanel" aria-labelledby="edit_delete-tab">
