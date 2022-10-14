@@ -21,7 +21,7 @@
             </h1>
         </div>
         <div class="col-12 col-xl-auto mb-3">
-            <a class="btn btn-sm btn-light text-primary" href={{ route('profile.edit', $user->phone) }}>
+            <a class="btn btn-sm btn-light text-primary" href={{ route('dashboard') }}>
                 <i class="fas fa-long-arrow-alt-left"></i> Kembali
             </a>
         </div>

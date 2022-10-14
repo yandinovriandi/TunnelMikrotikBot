@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\RouterosAPI;
 use App\Models\Tunnel;
 use App\Services\RouterosService;
 use Illuminate\Http\Request;
@@ -10,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use RouterOS\Client;
 use RouterOS\Config;
+use RouterOS\Query;
 
 class TunnelController extends Controller
 {
@@ -33,9 +33,12 @@ class TunnelController extends Controller
         $this->client = new Client($this->config);
     }
 
-    public function index()
+    public function index(Tunnel $tunnel)
     {
+
+
         $tunnels = auth()->user()->tunnels()->select('username', 'password', 'url', 'status', 'api')->get('username', 'password', 'url', 'status', 'api');
+
         return view('tunnels.index', [
             'tunnels' => $tunnels
         ]);
@@ -123,8 +126,29 @@ class TunnelController extends Controller
 
     public function show(Tunnel $tunnel)
     {
+        $win = $tunnel->winbox;
+        $winb = new Query('/ip/firewall/nat/print');
+        $winb->where('dst-port', $win);
+        $pwins =   $this->client->query($winb)->read();
+        $p_win = $pwins[0];
+
+        $papi = $tunnel->api;
+        $apip = new Query('/ip/firewall/nat/print');
+        $apip->where('dst-port', $papi);
+        $apips =   $this->client->query($apip)->read();
+        $p_api = $apips[0];
+
+        $pweb = $tunnel->web;
+        $webp = new Query('/ip/firewall/nat/print');
+        $webp->where('dst-port', $pweb);
+        $webps =   $this->client->query($webp)->read();
+        $p_web = $webps[0];
+
         return view('tunnels/details', [
-            'tunnel' => $tunnel
+            'tunnel' => $tunnel,
+            'p_win' => $p_win,
+            'p_api' => $p_api,
+            'p_web' => $p_web
         ]);
     }
 
@@ -139,8 +163,72 @@ class TunnelController extends Controller
         $tunnel->update([
             'password' => $password
         ]);
-        $id = $tunnel->id;
-        $this->routerosService->editTunnel($id, $password);
+
+        $username = $tunnel->username;
+
+        // ==============api================
+        $rapi = $request->api;
+        $pap = $tunnel->api;
+
+        $updatePortApi = new Query('/ip/firewall/nat/print');
+        $updatePortApi->where('dst-port', $pap);
+        $upas = $this->client->query($updatePortApi)->read();
+
+        foreach ($upas as $upa) {
+            $updatePortWinbox = (new Query('/ip/firewal/nat/set'))
+                ->equal('.id', $upa['.id'])
+                ->equal('to-ports',  $rapi);
+            $this->client->query($updatePortWinbox)->read();
+        }
+
+        // ==============api================
+
+        // ==============winbox================
+        $pwin = $request->winbox;
+        $win = $tunnel->winbox;
+
+        $updatePortWinbox = new Query('/ip/firewall/nat/print');
+        $updatePortWinbox->where('dst-port', $win);
+        $wins = $this->client->query($updatePortWinbox)->read();
+
+        foreach ($wins as $win) {
+            $updatePortWinbox = (new Query('/ip/firewal/nat/set'))
+                ->equal('.id', $win['.id'])
+                ->equal('to-ports',  $pwin);
+            $this->client->query($updatePortWinbox)->read();
+        }
+        // ==============winbox================
+
+        // ==============web================
+        $pweb = $request->web;
+        $web = $tunnel->web;
+
+        $updatePortWeb = new Query('/ip/firewall/nat/print');
+        $updatePortWeb->where('dst-port', $web);
+        $webs = $this->client->query($updatePortWeb)->read();
+
+        foreach ($webs as $web) {
+            $updatePortWeb = (new Query('/ip/firewal/nat/set'))
+                ->equal('.id', $web['.id'])
+                ->equal('to-ports',  $pweb);
+            $this->client->query($updatePortWeb)->read();
+        }
+        // ==============web================
+
+
+        $updateTunnel = new Query('/ppp/secret/print');
+        $updateTunnel->where('name', $username);
+        $tunnelUsers = $this->client->query($updateTunnel)->read();
+
+        foreach ($tunnelUsers as $tu) {
+            $tu = (new Query('/ppp/secret/set'))
+                ->where('name', $username)
+                ->equal('.id', $tu['.id'])
+                ->equal('password', $password);
+            $this->client->query($tu)->read();
+        }
+
+
         session()->flash('status', 'Data tunnel berhasil di perbaharui ');
         return to_route('tunnels.show', $tunnel);
     }

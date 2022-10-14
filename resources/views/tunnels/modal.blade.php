@@ -4,7 +4,7 @@
              <div class="modal-body">
                  <h5 class="modal-title mb-4 text-cyan" id="modalTunnelTitle">Edit Tunnel {{ $tunnel->username }}</h5>
                  <form action={{ route('tunnels.update', $tunnel) }} method="post">
-                     @method('patch')
+                     @method('put')
                      @csrf
                      <div class="mb-3">
                          <label for="username">Username</label>
@@ -24,10 +24,24 @@
                              <div class="invalid-feedback">{{ $message }}</div>
                          @enderror
                      </div>
+                     <div class="mb-3">
+                         <label for="winbox">Port Winbox Default 8291</label>
+                         <input class="form-control" id="winbox" name="winbox" type="number" placeholder="winbox"
+                             value="{{ old('winbox') }}">
+                     </div>
+                     <div class="mb-3">
+                         <label for="api">Port Api Default 8728</label>
+                         <input class="form-control" id="api" name="api" type="number" placeholder="api"
+                             value="{{ old('api') }}">
+                     </div>
+                     <div class="mb-3">
+                         <label for="web">Port Web Default 80</label>
+                         <input class="form-control" id="web" name="web" type="number" placeholder="web"
+                             value="{{ old('web') }}">
+                     </div>
                      <div class="modal-footer">
-                         <button class="btn btn-sm btn-secondary" type="button"
-                             data-bs-dismiss="modal">Batal</button><button class="btn btn-sm btn-primary"
-                             type="submit">Simpan Perubahan</button>
+                         <button class="btn btn-sm btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>
+                         <button class="btn btn-sm btn-primary" type="submit">Simpan Perubahan</button>
                      </div>
                  </form>
              </div>

@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('tunnels/create', 'store')->name('tunnels.store');
         Route::get('tunnels', 'index')->name('tunnels.index');
         Route::get('tunnels/details/{tunnel:username}', 'show')->name('tunnels.show');
-        Route::patch('tunnels/details/{tunnel:username}', 'update')->name('tunnels.update');
+        Route::put('tunnels/details/{tunnel:username}', 'update')->name('tunnels.update');
         Route::delete('tunnels/details/{tunnel}', 'destroy')->name('tunnels.delete');
     });
 

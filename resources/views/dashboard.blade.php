@@ -172,10 +172,6 @@
                                             href={{ route('topup.show', $invoice->reference) }}>
                                             <i class="far fa-file-alt"></i>
                                         </a>
-                                    @else
-                                        <button disabled class="btn btn-datatable btn-icon btn-transparent-dark me-2">
-                                            <i class="far fa-file-alt"></i>
-                                        </button>
                                     @endif
                                 </td>
                             </tr>

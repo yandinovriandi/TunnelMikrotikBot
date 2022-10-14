@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Libraries\RouterosAPI;
 use RouterOS\Client;
 use RouterOS\Config;
 use RouterOS\Query;
+use Symfony\Component\Mime\Encoder\QpEncoder;
 
 class RouterosService
 {
@@ -24,6 +26,15 @@ class RouterosService
                 'tcp_nodelay' => true
             ]
         ]);
+        $this->ros = new Client($this->config);
+
+        $this->client = new RouterosAPI();
+        $this->client->debug = false;
+        $this->client->connect(
+            config('routeros-api.host'),
+            config('routeros-api.user'),
+            config('routeros-api.pass')
+        );
     }
 
     public function addTunnel($name, $pass, $localaddress, $remoteadress, $mainprofile)
@@ -39,6 +50,7 @@ class RouterosService
         if (!empty($remoteadress)) {
             $query->equal('remote-address', $remoteadress);
         }
+        $query->equal('comment', strtoupper($name));
         $query->equal('profile', $mainprofile);
         $query->equal('service', 'l2tp');
         return $this->ros->qr($query);
@@ -92,19 +104,29 @@ class RouterosService
         return $this->ros->qr($web);
     }
 
-    public function editTunnel($id, $password)
+
+    public function editTunnel($id, $username, $password, $localaddress, $remoteaddress)
     {
         $this->ros = new Client($this->config);
-        $query = (new Query('/ppp/secret/set'))
-            ->equal('.id', $id)
-            ->equal('password', $password);
-        return $dd = $this->ros->query($query)->read();
+        $query = new Query('/ppp/secret/set');
+        $query->where('name', $username);
+        $query->equal('.id', $id);
+        $query->equal('name', $username);
+        $query->equal('password', $password);
+        $query->equal('comment', $username);
+        if (!empty($localaddress)) {
+            $query->equal('local-address', $localaddress);
+        }
+        if (!empty($remoteaddress)) {
+            $query->equal('remote-address', $remoteaddress);
+        }
+        return $this->ros->qr($query);
     }
 
-    public function get_ppp_secrets()
+    public function getIpFirewallNat($win)
     {
-        $this->ros = new Client($this->config);
-        $query = new Query('/ppp/secret/print');
-        return $this->ros->qr($query);
+        $query = new Query('/ip/firewall/nat/print');
+        $query->where('dst-port', $win);
+        $nats = $this->ros->query($query)->read();
     }
 }

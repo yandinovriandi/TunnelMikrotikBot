@@ -33,16 +33,19 @@
                                 <div class="text-center"> <img class="img-fluid px-3 px-sm-4 mt-3 mb-4"
                                         style="width: 11rem;"
                                         src="https://tunnel.hostddns.us/images/undraw_server_cluster_jwwq.svg"
-                                        alt=""> </div>
+                                        alt="">
+                                </div>
                                 <h4 class="card-title">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Tunnel Remot</div>
                                 </h4>
                                 <p class="badge bg-success">{{ $tunnel->status }}</p>
                                 <p class="text-xs mb-1">
                                     <code>
-                                        {{ $tunnel->url }} (api:8727),
-                                        {{ $tunnel->server }}:{{ $tunnel->winbox }} (winbox:8291),
-                                        {{ $tunnel->server }}:{{ $tunnel->web }} (webfig:80)
+                                        {{ $tunnel->url }} (api:{{ $p_api['to-ports'] }}),
+                                        {{ $tunnel->server }}:{{ $p_win['dst-port'] }}
+                                        (winbox:{{ $p_win['to-ports'] }}),
+                                        {{ $tunnel->server }}:{{ $p_web['dst-port'] }}
+                                        (webfig:{{ $p_web['to-ports'] }})
                                     </code>
                                 </p>
                             </center>
@@ -79,7 +82,8 @@
                             <hr>
                             <p class="card-text">
                                 <code>
-                                    :if ([:len [/ppp profile find name="{{ $tunnel->server }}"]]=0) do={/ppp profile add
+                                    :if ([:len [/ppp profile find name="{{ $tunnel->server }}"]]=0) do={/ppp profile
+                                    add
                                     name="{{ $tunnel->server }}" comment="{{ $tunnel->server }}"};/interface
                                     l2tp-client add
                                     user="{{ $tunnel->username }}" password="{{ $tunnel->password }}"
@@ -108,8 +112,8 @@
                             </p>
                             <center>
                                 <p class="card-text">
-                                    <button disabled class="btn btn-sm btn-outline-yellow btn-icon"
-                                        data-bs-toggle="modal" data-bs-target="#modalTunnel" type="button">
+                                    <button class="btn btn-sm btn-outline-yellow btn-icon" data-bs-toggle="modal"
+                                        data-bs-target="#modalTunnel" type="button">
                                         <i data-feather="edit"></i>
                                     </button>
                                     <button class="btn btn-sm btn-outline-red btn-icon" data-bs-toggle="modal"
@@ -152,28 +156,28 @@
                             <tr>
                                 <td><b>Port API</b></td>
                                 <td><b><span class="badge bg-purple-soft text-purple"
-                                            title="Remote API">{{ $tunnel->server }}:{{ $tunnel->api }}</span></b>
+                                            title="Remote API">{{ $tunnel->server }}:{{ $p_api['dst-port'] }}</span></b>
                                     <i class="fas fa-exchange-alt"></i>
                                     <i><span class="badge bg-red-soft text-red"
-                                            title="IP local API">{{ $tunnel->ip_server }}:8728</span></i>
+                                            title="IP local API">{{ $p_api['to-addresses'] }}:{{ $p_api['to-ports'] }}</span></i>
                                 </td>
                             </tr>
                             <tr>
                                 <td><b>Port Winbox</b></td>
                                 <td><b><span class="badge bg-purple-soft text-purple"
-                                            title="Remote Winbox">{{ $tunnel->server }}:{{ $tunnel->winbox }}</span></b>
+                                            title="Remote Winbox">{{ $tunnel->server }}:{{ $p_win['dst-port'] }}</span></b>
                                     <i class="fas fa-exchange-alt"></i>
                                     <i><span class="badge bg-red-soft text-red"
-                                            title="IP Local Winbox">{{ $tunnel->ip_server }}:8291</span></i>
+                                            title="IP Local Winbox">{{ $p_api['to-addresses'] }}:{{ $p_win['to-ports'] }}</span></i>
                                 </td>
                             </tr>
                             <tr>
                                 <td><b>Port Web</b></td>
                                 <td><b><span class="badge bg-purple-soft text-purple"
-                                            title="Remote WEB">{{ $tunnel->server }}:{{ $tunnel->web }}</span></b>
+                                            title="Remote WEB">{{ $tunnel->server }}:{{ $p_web['dst-port'] }}</span></b>
                                     <i class="fas fa-exchange-alt"></i>
                                     <i><span class="badge bg-red-soft text-red"
-                                            title="IP Local Web">{{ $tunnel->ip_server }}:80</span></i>
+                                            title="IP Local Web">{{ $p_web['to-addresses'] }}:{{ $p_web['to-ports'] }}</span></i>
                                 </td>
                             </tr>
                             <tr>
