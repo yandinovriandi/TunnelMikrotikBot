@@ -1,7 +1,6 @@
 
  
-aplikasi Mikrotik api laravel dengan payment getway. untuk membuat tunnel remote mikrotik.  <iframe src="https://github.com/sponsors/yandinovriandi/button" title="Sponsor yandinovriandi" height="35" width="116" style="border: 0;"></iframe>
-
+aplikasi Mikrotik api laravel dengan payment getway. untuk membuat tunnel remote mikrotik.   
 
 ![Xnapper-2022-10-14-18 15 44](https://user-images.githubusercontent.com/17920675/195839490-e0f32909-bf12-4110-801e-02b6f5f6f963.png)
 ![Xnapper-2022-10-14-18 25 20](https://user-images.githubusercontent.com/17920675/195839506-6aa1acea-5c8d-4964-a053-594c827f0f8b.png)
