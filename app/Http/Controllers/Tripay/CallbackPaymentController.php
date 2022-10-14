@@ -11,7 +11,7 @@ use App\Models\Invoice;
 class CallbackPaymentController extends Controller
 {
     // Isi dengan private key anda
-    protected $privateKey = '0wohw-l3xZA-8kWzi-B1MOh-JmJi7';
+    protected $privateKey = 'priavat key kamu';
 
     public function handle(Request $request)
     {

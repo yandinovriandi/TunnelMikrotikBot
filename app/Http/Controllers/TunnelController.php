@@ -33,9 +33,8 @@ class TunnelController extends Controller
         $this->client = new Client($this->config);
     }
 
-    public function index(Tunnel $tunnel)
+    public function index()
     {
-
 
         $tunnels = auth()->user()->tunnels()->select('username', 'password', 'url', 'status', 'api')->get('username', 'password', 'url', 'status', 'api');
 

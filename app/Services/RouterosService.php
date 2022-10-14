@@ -27,14 +27,6 @@ class RouterosService
             ]
         ]);
         $this->ros = new Client($this->config);
-
-        $this->client = new RouterosAPI();
-        $this->client->debug = false;
-        $this->client->connect(
-            config('routeros-api.host'),
-            config('routeros-api.user'),
-            config('routeros-api.pass')
-        );
     }
 
     public function addTunnel($name, $pass, $localaddress, $remoteadress, $mainprofile)
