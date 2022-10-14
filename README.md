@@ -36,7 +36,7 @@ composer install
 Jangan lupa untuk menginstall semua node package yang kita butuhkan seperti:
 
 ```bash
-npm install && npm run build
+npm install && npm run dev
 ```
 
 Jika ingin dikembangkan, bisa dengan menjalankan
