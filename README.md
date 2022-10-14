@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+```bash
+git clone https://github.com/yandinovriandi/TunnelMikrotikBot.git 'TunnelMikrotikBot'
+cd TunnelMikrotikBot
+```
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Instal semua PHP dependency dengan menjalankan perintah berikut ini
 
-## About Laravel
+```bash
+composer install
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Jangan lupa untuk menginstall semua node package yang kita butuhkan seperti:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+npm install && npm run build
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Jika ingin dikembangkan, bisa dengan menjalankan
 
-## Learning Laravel
+```bash
+npm run dev
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Buat 1 file dengan nama `.env` kemudian silakan copy semua yang ada di dalam file `.env.example` ke dalam file `.env`. Kemudian buka terminal kembali untuk generasi key baru.
+atau bisa dengan perintah
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+php artisan key:generate
+```
 
-## Laravel Sponsors
+Buat 1 database, dan sesuaikan namanya dengan konfirgurasi yang ada di file `.env`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=tunnelmikrotikbot
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-### Premium Partners
+```bash
+MIKROTIK_HOST=192.168.88.1
+MIKROTIK_USER=admin
+MIKROTIK_PASS=
+MIKROTIK_PORT=8728
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Setelah itu, jalankan perintah berikut pada terminal Anda.
 
-## Contributing
+```bash
+php artisan migrate:fresh
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Setelah itu, jalankan `artisan serve` untuk memulai laravel nya.
+Jika kita coba untuk mendaftarkan pengguna baru, harusnya akan muncul error seperti:
 
-## Code of Conduct
+```bash
+Connection could not be established with host
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Itu hanya karena kita perlu mengkonfigurasi email nya seperti:
 
-## Security Vulnerabilities
+```bash
+MAIL_MAILER=smtp
+MAIL_HOST=mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=username
+MAIL_PASSWORD=password
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@company.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+jika terasa lambat saat load tunnel, silahkan load data dari database jangan dari mikrotik.
 
-## License
+jika saat daftar user dan verifikasi email tidak ingin menunggu aktif kan queue.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+jika tabel jobs belum ada silahkan buat dulu
+
+```bash
+php artisan queue:work
+```
+
+Aplikasi ini saya buat sambil belajar di https:://parsinta.com
+
+silahkan anda kalau ma belajar laravel juga kunjungi parsinta.
+Silakan kembangkan dan jangan lupa stars nya.
