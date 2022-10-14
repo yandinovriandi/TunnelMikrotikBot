@@ -23,7 +23,7 @@
 
 
 ```bash
-git clone https://github.com/yandinovriandi/TunnelMikrotikBot.git 'TunnelMikrotikBot'![Uploading Xnapper-2022-10-14-18.15.44.png…]()
+git clone https://github.com/yandinovriandi/TunnelMikrotikBot.git
 
 cd TunnelMikrotikBot
 ```
