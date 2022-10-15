@@ -21,12 +21,15 @@ return new class extends Migration
             $table->string('ip_server');
             $table->string('server');
             $table->string('ip_tunnel');
-            $table->string('local-addrss');
+            $table->string('local_addrss');
             $table->string('url');
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
             $table->string('api')->unique();
+            $table->string('to_ports_api')->nullable();
             $table->string('winbox')->unique();
+            $table->string('to_ports_winbox')->nullable();
             $table->string('web')->unique();
+            $table->string('to_ports_web')->nullable();
             $table->dateTime('expired');
             $table->timestamps();
         });

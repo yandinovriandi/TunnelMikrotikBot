@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('merchant_ref');
             $table->timestamp('paid_at')->nullable();
             $table->double('amount')->nullable();
+            $table->double('total_amount')->nullable();
             $table->text('description');
             $table->enum('status', ['UNPAID', 'PAID', 'EXPIRED'])->default('UNPAID');
             $table->timestamps();

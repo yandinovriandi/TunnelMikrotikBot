@@ -35,8 +35,7 @@ class TunnelController extends Controller
 
     public function index()
     {
-
-        $tunnels = auth()->user()->tunnels()->select('username', 'password', 'url', 'status', 'api')->get('username', 'password', 'url', 'status', 'api');
+        $tunnels = auth()->user()->tunnels()->select('to_ports_api', 'username', 'password', 'url', 'status', 'api')->get('to_ports_api', 'username', 'password', 'url', 'status', 'api');
 
         return view('tunnels.index', [
             'tunnels' => $tunnels
@@ -59,8 +58,8 @@ class TunnelController extends Controller
         $iptunnel = '10.10.0.' . rand(40, 253);
         $localaddress = '10.10.0.1';
 
-        $debit = auth()->user()->invoices()->where('amount', '>=', 0)->get('amount')->sum('amount');
-        $credit = auth()->user()->invoices()->where('amount', '<', 0)->get('amount')->sum('amount');
+        $debit = auth()->user()->invoices()->where('total_amount', '>=', 0)->get('total_amount')->sum('total_amount');
+        $credit = auth()->user()->invoices()->where('total_amount', '<', 0)->get('total_amount')->sum('total_amount');
         $saldo = $debit + $credit;
 
         if (empty($request->username)) {
@@ -91,17 +90,20 @@ class TunnelController extends Controller
                 'password' => $pass = $request->password,
                 'ip_server' => '103.186.32.12',
                 'server' => 'sg1.mikrotikbot.com',
-                'local-addrss' =>  $localaddress,
+                'local_addrss' =>  $localaddress,
                 'ip_tunnel' => $remoteadress =  $iptunnel,
-                'url' => 'sg1.mikrotikbot.com:' . $portapi,
+                'url' => 'sg1.mikrotikbot.com',
                 'api' => $portapi,
                 'winbox' => $portwinbox,
+                'to_ports_api' => '8728',
+                'to_ports_winbox' => '8291',
+                'to_ports_web' => '80',
                 'web' => $portweb,
                 'expired' => now()->addMonth()
             ]);
 
             auth()->user()->invoices()->create([
-                'amount' => -5000,
+                'total_amount' => -5000,
                 'reference' => 'T' . time(),
                 'merchant_ref' => 'TINV-' . time(),
                 'description' => 'Order Layanan Tunnel',
@@ -125,36 +127,36 @@ class TunnelController extends Controller
 
     public function show(Tunnel $tunnel)
     {
-        $username = $tunnel->username;
-        $win = $tunnel->winbox;
-        $winb = new Query('/ip/firewall/nat/print');
-        $winb->where('dst-port', $win);
-        $pwins =   $this->client->query($winb)->read();
-        $p_win = $pwins[0];
+        // $username = $tunnel->username;
+        // $win = $tunnel->winbox;
+        // $winb = new Query('/ip/firewall/nat/print');
+        // $winb->where('dst-port', $win);
+        // $pwins =   $this->client->query($winb)->read();
+        // $p_win = $pwins[0];
 
-        $papi = $tunnel->api;
-        $apip = new Query('/ip/firewall/nat/print');
-        $apip->where('dst-port', $papi);
-        $apips =   $this->client->query($apip)->read();
-        $p_api = $apips[0];
+        // $papi = $tunnel->api;
+        // $apip = new Query('/ip/firewall/nat/print');
+        // $apip->where('dst-port', $papi);
+        // $apips =   $this->client->query($apip)->read();
+        // $p_api = $apips[0];
 
-        $pweb = $tunnel->web;
-        $webp = new Query('/ip/firewall/nat/print');
-        $webp->where('dst-port', $pweb);
-        $webps =   $this->client->query($webp)->read();
-        $p_web = $webps[0];
+        // $pweb = $tunnel->web;
+        // $webp = new Query('/ip/firewall/nat/print');
+        // $webp->where('dst-port', $pweb);
+        // $webps =   $this->client->query($webp)->read();
+        // $p_web = $webps[0];
 
-        $secrt = new Query('/ppp/secret/print');
-        $secrt->where('name', $username);
-        $secrets = $this->client->query($secrt)->read();
-        $secret = $secrets[0];
+        // $secrt = new Query('/ppp/secret/print');
+        // $secrt->where('name', $username);
+        // $secrets = $this->client->query($secrt)->read();
+        // $secret = $secrets[0];
         // dd($secret);
         return view('tunnels/details', [
             'tunnel' => $tunnel,
-            'secret' => $secret,
-            'p_win' => $p_win,
-            'p_api' => $p_api,
-            'p_web' => $p_web
+            // 'secret' => $secret,
+            // 'p_win' => $p_win,
+            // 'p_api' => $p_api,
+            // 'p_web' => $p_web
         ]);
     }
 
@@ -165,9 +167,15 @@ class TunnelController extends Controller
             'password' => ['required'],
         ]);
         $password = $request->password;
+        $to_ports_web = $request->web;
+        $to_ports_api = $request->api;
+        $to_ports_winbox = $request->winbox;
         $tunnel = Tunnel::where('username', $tunnel->username)->first();
         $tunnel->update([
-            'password' => $password
+            'password' => $password,
+            'to_ports_web' =>  $to_ports_web,
+            'to_ports_api' =>  $to_ports_api,
+            'to_ports_winbox' =>  $to_ports_winbox
         ]);
 
         $username = $tunnel->username;

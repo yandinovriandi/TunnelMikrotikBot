@@ -18,7 +18,7 @@
                             <div class="mb-3">
                                 <label class="text-gray-600 small" for="Name">Name</label>
                                 <input class="form-control @error('name') is-invalid @enderror form-control-solid"
-                                    name="name" type="text" value="{{ old('name') }}" placeholder=""
+                                    name="name" type="text" value="{{ old('name') }}" placeholder="Nama Lengkap"
                                     aria-label="Name" aria-describedby="Name" />
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -30,7 +30,7 @@
                             <div class="mb-3">
                                 <label class="text-gray-600 small" for="Phone">No Handphone</label>
                                 <input class="form-control @error('phone') is-invalid @enderror form-control-solid"
-                                    type="number" name="phone" placeholder="" value="{{ old('phone') }}"
+                                    type="number" name="phone" placeholder="628584000387" value="{{ old('phone') }}"
                                     aria-label="Phone" aria-describedby="Phone" />
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -38,15 +38,31 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Form Group (email address)-->
-                    <div class="mb-3">
-                        <label class="text-gray-600 small" for="email">Email address</label>
-                        <input class="form-control @error('email') is-invalid @enderror form-control-solid"
-                            name="email" type="text" placeholder="" value="{{ old('email') }}"
-                            aria-label="Email Address" aria-describedby="email" />
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                    <div class="row gx-3">
+                        <div class="col-md-6">
+                            <!-- Form Group (first name)-->
+                            <div class="mb-3">
+                                <label class="text-gray-600 small" for="Email">Email</label>
+                                <input class="form-control @error('email') is-invalid @enderror form-control-solid"
+                                    name="email" type="text" value="{{ old('email') }}"
+                                    placeholder="email@gmail.com" aria-label="Email" aria-describedby="Email" />
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- Form Group (last name)-->
+                            <div class="mb-3">
+                                <label class="text-gray-600 small" for="Username">Username</label>
+                                <input class="form-control @error('username') is-invalid @enderror form-control-solid"
+                                    type="text" name="username" placeholder="myusername"
+                                    value="{{ old('username') }}" aria-label="Username" aria-describedby="Username" />
+                                @error('username')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <!-- Form Row-->
                     <div class="row gx-3">
@@ -55,7 +71,7 @@
                             <div class="mb-3">
                                 <label class="text-gray-600 small" for="passwordExample">Password</label>
                                 <input class="form-control @error('password') is-invalid @enderror form-control-solid"
-                                    name="password" type="password" placeholder="" aria-label="Password"
+                                    name="password" type="password" placeholder="********" aria-label="Password"
                                     aria-describedby="passwordExample" />
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -67,7 +83,7 @@
                             <div class="mb-3">
                                 <label class="text-gray-600 small" for="confirmPasswordExample">Confirm Password</label>
                                 <input class="form-control @error('password_confirmation') @enderror form-control-solid"
-                                    name="password_confirmation" type="password" placeholder=""
+                                    name="password_confirmation" type="password" placeholder="********"
                                     aria-label="Confirm Password" aria-describedby="confirmPasswordExample" />
                             </div>
                             @error('password_confirmation')
@@ -78,14 +94,14 @@
                     <!-- Form Group (form submission)-->
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="form-check">
-                            <input class="form-check-input" id="checkTerms" type="checkbox" value="" />
+                            <input class="form-check-input" id="checkTerms" checked type="checkbox" value="" />
                             <label class="form-check-label" for="checkTerms">
                                 I accept the
                                 <a href="#!">terms &amp; conditions</a>
                                 .
                             </label>
                         </div>
-                        <button class="btn btn-primary" href={{ 'register' }}>Create Account</button>
+                        <button class="btn btn-primary" href={{ 'register' }}>Register</button>
                     </div>
                 </form>
             </div>

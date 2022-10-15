@@ -21,8 +21,8 @@ class InvoiceController extends Controller
             ->get('reference', 'merchant_ref', 'amount', 'created_at', 'paid_at', 'description', 'status');
         $payments = $this->tripayService->getPayments();
 
-        $debit = auth()->user()->invoices()->where('amount', '>=', 0)->get('amount')->sum('amount');
-        $credit = auth()->user()->invoices()->where('amount', '<', 0)->get('amount')->sum('amount');
+        $debit = auth()->user()->invoices()->where('total_amount', '>=', 0)->get('total_amount')->sum('total_amount');
+        $credit = auth()->user()->invoices()->where('total_amount', '<', 0)->get('total_amount')->sum('total_amount');
         $saldo = $debit + $credit;
         return view('topup.transaksi', [
             'invoices' => $invoices,
@@ -66,6 +66,7 @@ class InvoiceController extends Controller
             'reference' => $invoice->reference,
             'merchant_ref' => $invoice->merchant_ref,
             'description' => 'Topup Saldo',
+            'amount' => $request->amount,
             'method' => $method
         ]);
 

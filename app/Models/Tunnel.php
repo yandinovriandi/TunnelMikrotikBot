@@ -13,7 +13,9 @@ class Tunnel extends Model
         return 'username';
     }
     protected $fillable = [
-        'user_id', 'username', 'password', 'ip_server', 'server', 'local-addrss', 'ip_tunnel', 'url', 'web', 'api', 'winbox', 'expired',
+        'user_id', 'username', 'password', 'ip_server', 'server', 'local_addrss', 'ip_tunnel', 'url', 'web', 'api', 'winbox', 'expired', 'to_ports_api',
+        'to_ports_winbox',
+        'to_ports_web',
     ];
     public function user()
     {

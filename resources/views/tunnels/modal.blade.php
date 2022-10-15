@@ -27,17 +27,17 @@
                      <div class="mb-3">
                          <label for="winbox">Port Winbox Default 8291</label>
                          <input class="form-control" id="winbox" name="winbox" type="number" placeholder="winbox"
-                             value="{{ old('winbox') }}">
+                             value="{{ old('winbox', $tunnel->to_ports_winbox) }}">
                      </div>
                      <div class="mb-3">
                          <label for="api">Port Api Default 8728</label>
                          <input class="form-control" id="api" name="api" type="number" placeholder="api"
-                             value="{{ old('api') }}">
+                             value="{{ old('api', $tunnel->to_ports_api) }}">
                      </div>
                      <div class="mb-3">
                          <label for="web">Port Web Default 80</label>
                          <input class="form-control" id="web" name="web" type="number" placeholder="web"
-                             value="{{ old('web') }}">
+                             value="{{ old('web', $tunnel->to_ports_web) }}">
                      </div>
                      <div class="modal-footer">
                          <button class="btn btn-sm btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>

@@ -64,7 +64,7 @@ class CallbackPaymentController extends Controller
             $invoice->update([
                 'status' => $status,
                 'paid_at' => now(),
-                'amount' => $data->amount_received
+                'total_amount' => $data->amount_received
             ]);
             return Response::json(['success' => true]);
         }

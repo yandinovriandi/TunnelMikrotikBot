@@ -21,8 +21,9 @@
                     <div class="mb-3">
                         <label class="text-gray-600 small" for="emailExample">Email address</label>
                         <input class="form-control @error('email') is-invalid @enderror form-control-solid"
-                            value="{{ old('email') }}" type="text" name="email" placeholder=""
-                            aria-label="Email Address" aria-describedby="emailExample" />
+                            value="{{ old('email') }}" type="text" name="email"
+                            placeholder="activeemail@gmail.com" aria-label="Email Address"
+                            aria-describedby="emailExample" />
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -31,7 +32,7 @@
                     <div class="mb-3">
                         <label class="text-gray-600 small" for="passwordExample">Password</label>
                         <input class="form-control @error('password') is-invalid @enderror form-control-solid"
-                            name="password" type="password" placeholder="" aria-label="Password"
+                            name="password" type="password" placeholder="********" aria-label="Password"
                             aria-describedby="passwordExample" />
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -48,8 +49,8 @@
                     <!-- Form Group (login box)-->
                     <div class="d-flex align-items-center justify-content-between mb-0">
                         <div class="form-check">
-                            <input class="form-check-input" id="checkRememberPassword" type="checkbox" value=""
-                                name="remember" />
+                            <input class="form-check-input" id="checkRememberPassword" checked type="checkbox"
+                                value="" name="remember" />
                             <label class="form-check-label" for="checkRememberPassword">Remember
                                 password</label>
                         </div>

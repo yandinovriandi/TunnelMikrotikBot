@@ -41,11 +41,11 @@
                                 <p class="badge bg-success">{{ $tunnel->status }}</p>
                                 <p class="text-xs mb-1">
                                     <code>
-                                        {{ $tunnel->url }} (api:{{ $p_api['to-ports'] ?? '' }}),
-                                        {{ $tunnel->server }}:{{ $p_win['dst-port'] ?? '' }}
-                                        (winbox:{{ $p_win['to-ports'] ?? '' }}),
-                                        {{ $tunnel->server }}:{{ $p_web['dst-port'] ?? '' }}
-                                        (webfig:{{ $p_web['to-ports'] ?? '' }})
+                                        {{ $tunnel->url }} (api:{{ $tunnel->to_ports_api ?? '' }}),
+                                        {{ $tunnel->server }}:{{ $tunnel->winbox ?? '' }}
+                                        (winbox:{{ $tunnel->to_ports_winbox ?? '' }}),
+                                        {{ $tunnel->server }}:{{ $tunnel->web ?? '' }}
+                                        (webfig:{{ $tunnel->to_ports_web ?? '' }})
                                     </code>
                                 </p>
                             </center>
@@ -99,9 +99,9 @@
                             <hr>
                             <p class="card-text">
                             <p class="text-xs"> Di sarankan menggunakan netwatch</p>
-                            <p class="text-xs">IP : {{ $secret['local-address'] ?? '' }}</p>
+                            <p class="text-xs">IP : {{ $tunnel->local_addrss ?? '' }}</p>
                             <code class="text-xs">
-                                /tool netwatch add host="{{ $secret['local-address'] ?? '' }}" interval="00:01:00"
+                                /tool netwatch add host="{{ $tunnel->local_addrss ?? '' }}" interval="00:01:00"
                                 comment="mikrotikbot.com"
                             </code>
                         </div>
@@ -157,28 +157,28 @@
                             <tr>
                                 <td><b>Port API</b></td>
                                 <td><b><span class="badge bg-purple-soft text-purple"
-                                            title="Remote API">{{ $tunnel->server }}:{{ $p_api['dst-port'] }}</span></b>
+                                            title="Remote API">{{ $tunnel->server }}:{{ $tunnel->api }}</span></b>
                                     <i class="fas fa-exchange-alt"></i>
                                     <i><span class="badge bg-red-soft text-red"
-                                            title="IP local API">{{ $p_api['to-addresses'] }}:{{ $p_api['to-ports'] }}</span></i>
+                                            title="IP local API">{{ $tunnel->ip_tunnel }}:{{ $tunnel->to_ports_api }}</span></i>
                                 </td>
                             </tr>
                             <tr>
                                 <td><b>Port Winbox</b></td>
                                 <td><b><span class="badge bg-purple-soft text-purple"
-                                            title="Remote Winbox">{{ $tunnel->server }}:{{ $p_win['dst-port'] }}</span></b>
+                                            title="Remote Winbox">{{ $tunnel->server }}:{{ $tunnel->winbox }}</span></b>
                                     <i class="fas fa-exchange-alt"></i>
                                     <i><span class="badge bg-red-soft text-red"
-                                            title="IP Local Winbox">{{ $p_api['to-addresses'] }}:{{ $p_win['to-ports'] }}</span></i>
+                                            title="IP Local Winbox">{{ $tunnel->ip_tunnel }}:{{ $tunnel->to_ports_winbox }}</span></i>
                                 </td>
                             </tr>
                             <tr>
                                 <td><b>Port Web</b></td>
                                 <td><b><span class="badge bg-purple-soft text-purple"
-                                            title="Remote WEB">{{ $tunnel->server }}:{{ $p_web['dst-port'] }}</span></b>
+                                            title="Remote WEB">{{ $tunnel->server }}:{{ $tunnel->web }}</span></b>
                                     <i class="fas fa-exchange-alt"></i>
                                     <i><span class="badge bg-red-soft text-red"
-                                            title="IP Local Web">{{ $p_web['to-addresses'] }}:{{ $p_web['to-ports'] }}</span></i>
+                                            title="IP Local Web">{{ $tunnel->ip_tunnel }}:{{ $tunnel->to_ports_web }}</span></i>
                                 </td>
                             </tr>
                             <tr>

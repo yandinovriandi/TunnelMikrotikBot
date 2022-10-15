@@ -20,8 +20,8 @@ class DashboardController extends Controller
             })
             ->paginate(6);
         $invoicePending = auth()->user()->invoices()->where('paid_at', '=', null)->count();
-        $debit = auth()->user()->invoices()->where('amount', '>=', 0)->get('amount')->sum('amount');
-        $credit = auth()->user()->invoices()->where('amount', '<', 0)->get('amount')->sum('amount');
+        $debit = auth()->user()->invoices()->where('total_amount', '>=', 0)->get('total_amount')->sum('total_amount');
+        $credit = auth()->user()->invoices()->where('total_amount', '<', 0)->get('total_amount')->sum('total_amount');
         $saldo = $debit + $credit;
         $tunnel = auth()->user()->tunnels()->get()->count();
         return view('dashboard', [

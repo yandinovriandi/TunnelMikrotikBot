@@ -50,9 +50,9 @@
                                     <td>{{ $tunnel->username }}</td>
                                     <td>{{ $tunnel->password }}</td>
                                     <td class="d-flex items-center align-items-center"><span
-                                            class="badge bg-orange mr-1">{{ $tunnel->url }}</span> <i
-                                            class="fas fa-exchange-alt"></i> <span class="badge bg-teal ml-1">
-                                            8728</span></td>
+                                            class="badge bg-orange mr-1">{{ $tunnel->url }}:{{ $tunnel->api }}</span>
+                                        <i class="fas fa-exchange-alt"></i> <span class="badge bg-teal ml-1">
+                                            {{ $tunnel->to_ports_api }}</span></td>
                                     <td>
                                         <div
                                             class="badge {{ $tunnel->status == 'UNPAID' ? 'bg-warning' : ' bg-success' }} rounded-pill">

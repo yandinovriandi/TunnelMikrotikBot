@@ -8,9 +8,9 @@ function generatePort($digits = 4)
     $portweb = '';
     while ($i < $digits) {
         //generate a random number between 0 and 9.
-        $portapi .= rand(1, 9);
-        $portwinbox .= rand(1, 9);
-        $portweb .= rand(1, 9);
+        $portapi .= rand(1, 2);
+        $portwinbox .= rand(3, 4);
+        $portweb .= rand(5, 6);
         $i++;
     }
 
