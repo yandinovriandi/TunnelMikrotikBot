@@ -1,4 +1,4 @@
-
+Demo [TunnelMikrotikBot](https://tunnelmikrotikbot.com/register)
  
 aplikasi Mikrotik api laravel dengan payment getway. untuk membuat tunnel remote mikrotik.   
 
@@ -110,7 +110,7 @@ jika tabel jobs belum ada silahkan buat dulu
 php artisan queue:work
 ```
 
-Aplikasi ini saya buat sambil belajar di https:://parsinta.com
+Aplikasi ini saya buat sambil belajar di [parsinta](https://parsinta.com)
 
 silahkan anda kalau ma belajar laravel juga kunjungi parsinta.
 Silakan kembangkan dan jangan lupa stars nya.
