@@ -1,4 +1,4 @@
-Demo [TunnelMikrotikBot](https://tunnelmikrotikbot.com/register)
+Demo [TunnelMikrotikBot](https://tunnel.mikrotikbot.com/register)
  
 aplikasi Mikrotik api laravel dengan payment getway. untuk membuat tunnel remote mikrotik.   
 
